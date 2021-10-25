@@ -1,3 +1,8 @@
+.main {
+	border: black;
+	margin-bottom: 2rem;
+}
+
 .main span {
 	margin: 0 1rem 0 1rem;
 }
