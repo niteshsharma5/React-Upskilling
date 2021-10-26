@@ -1,4 +1,7 @@
-/* .name_display {
-  display: block;
-  font-size: 5rem;
-} */
+.name_display {
+	margin-top: 0.3rem;
+}
+
+.submit_btn {
+	margin-left: 1rem;
+}

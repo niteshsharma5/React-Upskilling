@@ -1,5 +1,4 @@
 .main {
-	border: black;
 	margin-bottom: 2rem;
 }
 
@@ -8,6 +7,6 @@
 }
 
 .right_side {
-	margin-top: 1rem;
+	margin-top: 0.7rem;
 	color: red;
 }

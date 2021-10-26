@@ -11,25 +11,19 @@ const Name = () => {
 
 	return (
 		<div className="main">
-			<label>Your Name</label>
+			<h3>Name</h3>
+			<label>Your Name </label>
 			<input
 				type="text"
 				placeholder="Please Enter Your Name"
 				value={name}
 				onChange={handleChange}
 			/>
-			<button onClick={handleChangeOnSubmit}>Submit</button>
-
-			<div className="name_display">
-				<p>
-					<b>Hello {name}</b>
-				</p>
-			</div>
-			<div className="name_display">
-				<p>
-					<b>Hello {name1}</b>
-				</p>
-			</div>
+			<button className="submit_btn" onClick={handleChangeOnSubmit}>
+				Submit
+			</button>
+			{name.length > 0 && <div className="name_display">Hello {name}</div>}
+			{name1.length > 0 && <div className="name_display">Hello {name1}</div>}
 		</div>
 	);
 };
