@@ -6,7 +6,6 @@
 	margin: 0 1rem 0 1rem;
 }
 
-.right_side {
-	margin-top: 0.7rem;
-	color: red;
+#counter-controls button {
+	margin-right: 0.5rem;
 }
