@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./ApiBasic.css";
 
 const ApiBasic = () => {
-	const [users, setUsers] = useState(null);
+	const [users, setUsers] = useState([]);
 	const [dataIsLoaded, setDataIsLoaded] = useState(false);
 
 	const handleSubmit = (event) => {
