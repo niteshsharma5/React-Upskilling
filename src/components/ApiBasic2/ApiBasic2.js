@@ -1,30 +1,45 @@
-import React, { useState } from "react";
-import "./ApiBasic.css";
+import React, { useState, useEffect } from "react";
+import "./ApiBasic2.css";
 
-const ApiBasic = () => {
+const ApiBasic2 = () => {
 	const [users, setUsers] = useState([]);
 	const [dataIsLoaded, setDataIsLoaded] = useState(false);
 
-	const getUserInformation = (event) => {
-		event.preventDefault();
+	const getUserInformation = (pageNumber) => {
+		const url =
+			"http://fakeapi.jsonparseronline.com/users" + "?_page=" + pageNumber;
 
-		fetch("http://fakeapi.jsonparseronline.com/users")
+		setLoading(true);
+
+		fetch(url)
 			.then((res) => res.json())
 			.then((json) => {
 				setUsers(json);
 				setDataIsLoaded(true);
+				setCurrentPage(pageNumber);
 			})
 			.catch((err) => {
 				console.log(err);
 			});
+		setLoading(false);
 	};
+
+	const [loading, setLoading] = useState(false);
+	const [currentPage, setCurrentPage] = useState(1);
+	const [usersPerPage] = useState(10);
+	const [pages, setPages] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+
+	useEffect(() => {
+		getUserInformation(1);
+	});
 
 	return (
 		<div>
-			<h3>API Basic</h3>
-			<button onClick={getUserInformation}>Fetch data</button>
+			<h3>API Basic 2</h3>
 			<div className="display-details">
-				{dataIsLoaded && (
+				{loading ? (
+					<h6>Loading...</h6>
+				) : (
 					<table>
 						<tbody>
 							<tr>
@@ -62,8 +77,27 @@ const ApiBasic = () => {
 					</table>
 				)}
 			</div>
+			<div className="page-buttons">
+				<button
+					disabled={currentPage === 1}
+					onClick={() => getUserInformation(currentPage - 1)}
+				>
+					prev
+				</button>
+				{pages.map((page) => (
+					<button key={page} onClick={() => getUserInformation(page)}>
+						{page}
+					</button>
+				))}
+				<button
+					disabled={currentPage === 10}
+					onClick={() => getUserInformation(currentPage + 1)}
+				>
+					next
+				</button>
+			</div>
 		</div>
 	);
 };
 
-export default ApiBasic;
+export default ApiBasic2;

@@ -137,8 +137,13 @@ const Form = () => {
 						<label>Gender:</label>
 					</div>
 					<div>
-						<select name="gender" required onChange={handleChange}>
-							<option selected disabled value="">
+						<select
+							defaultValue={"DEFAULT"}
+							name="gender"
+							required
+							onChange={handleChange}
+						>
+							<option disabled value="DEFAULT">
 								Choose...
 							</option>
 							<option value="Male">Male</option>
