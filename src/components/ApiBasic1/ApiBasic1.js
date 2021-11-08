@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./ApiBasic.css";
+import "./ApiBasic1.css";
 
 const ApiBasic = () => {
 	const [users, setUsers] = useState([]);
@@ -21,12 +21,14 @@ const ApiBasic = () => {
 
 	return (
 		<div>
-			<h3>API Basic</h3>
+			<h3>API Basic 1</h3>
+
 			<button onClick={getUserInformation}>Fetch data</button>
+
 			<div className="display-details">
 				{dataIsLoaded && (
 					<table>
-						<tbody>
+						<thead>
 							<tr>
 								<th>Name</th>
 								<th>E-mail</th>
@@ -36,7 +38,8 @@ const ApiBasic = () => {
 								<th>Phone</th>
 								<th>Website</th>
 							</tr>
-
+						</thead>
+						<tbody>
 							{users.map((user) => (
 								<tr key={user.id}>
 									<td>{user.firstName + " " + user.lastName}</td>
