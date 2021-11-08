@@ -5,6 +5,7 @@ const ApiBasic2 = () => {
 	const [users, setUsers] = useState([]);
 	const [dataIsLoaded, setDataIsLoaded] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
+
 	const pages = [1, 2, 3, 4, 5];
 
 	const getUserInformation = (pageNumber) => {
