@@ -93,6 +93,7 @@ const Form = () => {
 							name="username"
 							maxLength={78}
 							required
+							style={{ width: "200px" }}
 							value={inputs.username.value}
 							onChange={handleChange}
 						/>
@@ -108,6 +109,7 @@ const Form = () => {
 					</div>
 					<div>
 						<input
+							style={{ width: "200px" }}
 							type="date"
 							max={new Date().toISOString().slice(0, 10)}
 							name="dob"
@@ -125,7 +127,13 @@ const Form = () => {
 						<label>E-mail:</label>
 					</div>
 					<div>
-						<input type="email" name="mail" required onChange={handleChange} />
+						<input
+							type="email"
+							style={{ width: "200px" }}
+							name="mail"
+							required
+							onChange={handleChange}
+						/>
 						{inputs.mail.dirty && (
 							<div className="error-message"> {inputs.mail.error}</div>
 						)}
@@ -139,6 +147,7 @@ const Form = () => {
 					<div>
 						<select
 							defaultValue={"DEFAULT"}
+							style={{ width: "208px" }}
 							name="gender"
 							required
 							onChange={handleChange}
@@ -163,6 +172,7 @@ const Form = () => {
 					</div>
 					<div>
 						<input
+							style={{ width: "200px" }}
 							type="number"
 							name="mobile"
 							required
@@ -182,6 +192,7 @@ const Form = () => {
 					</div>
 					<div>
 						<textarea
+							style={{ width: "200px", maxWidth: "200px", overflow: "hidden" }}
 							type="text"
 							name="address"
 							required
