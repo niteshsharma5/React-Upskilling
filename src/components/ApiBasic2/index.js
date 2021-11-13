@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./style.css";
 
 import useAPIReducer from "./APIReducer";
@@ -6,40 +6,54 @@ import useAPIReducer from "./APIReducer";
 const APIBasic2 = () => {
 	const [myData, dispatch] = useAPIReducer();
 
-	const pages = [1, 2, 3, 4, 5];
+	useEffect(() => {
+		setPage(1);
+	}, []);
 
-	const getUserInformation = (pageNumber) => {
-		const url = `http://fakeapi.jsonparseronline.com/users?_page=${pageNumber}`;
+	useEffect(() => {
+		getUserInformation();
+	}, [myData.currentPage]);
+
+	const setPage = (pageNumber) => {
+		dispatch({ type: "SET_CURRENT_PAGE", payload: pageNumber });
+	};
+
+	const getUserInformation = () => {
+		const url = `http://fakeapi.jsonparseronline.com/users?_page=${myData.currentPage}`;
 
 		dispatch({ type: "SET_FETCH_IN_PROGRESS", payload: true });
+		setTimeout(() => {
+			fetch(url)
+				.then((res) => {
+					if (myData.totalNumberOfPages === -1) {
+						const totalNumberOfPages = res.headers.get("X-Total-Count") / 10;
+						dispatch({
+							type: "SET_TOTAL_NUMBER_OF_PAGES",
+							payload: totalNumberOfPages,
+						});
+					}
 
-		fetch(url)
-			.then((res) => res.json())
-			.then((json) => {
-				dispatch({ type: "SET_USERS", payload: json });
-				dispatch({ type: "SET_CURRENT_PAGE", payload: pageNumber });
-			})
-			.catch((err) => {
-				console.log(err);
-			})
-			.finally(() => {
-				dispatch({ type: "SET_FETCH_IN_PROGRESS", payload: false });
-			});
+					return res.json();
+				})
+				.then((json) => {
+					dispatch({ type: "SET_USERS", payload: json });
+				})
+				.catch((err) => {
+					console.log(err);
+				})
+				.finally(() => {
+					dispatch({ type: "SET_FETCH_IN_PROGRESS", payload: false });
+				});
+		}, 2000);
 	};
 
 	return (
 		<div className="outer-block">
 			<h3>API Basic 2</h3>
 
-			<button
-				onClick={() => getUserInformation(1)}
-				disabled={myData.fetchingInProgress}
-			>
-				{myData.fetchingInProgress ? "Loading..." : "Fetch data"}
-			</button>
-
 			{myData.users.length > 0 && (
 				<div className="display-details">
+					(
 					<table>
 						<thead>
 							<tr>
@@ -90,43 +104,63 @@ const APIBasic2 = () => {
 							))}
 						</tbody>
 					</table>
+					)}
 				</div>
 			)}
 
 			{myData.users.length > 0 && (
-				<div className="page-buttons">
-					<button
-						style={{
-							width: "4rem",
-						}}
-						disabled={myData.currentPage === 1 || myData.fetchingInProgress}
-						onClick={() => getUserInformation(myData.currentPage - 1)}
-					>
-						prev
-					</button>
-					{pages.map((page) => (
+				<div>
+					<div className="page-buttons">
 						<button
-							key={page}
 							style={{
-								backgroundColor: myData.currentPage === page ? "blue" : "",
+								width: "4rem",
+							}}
+							disabled={myData.currentPage === 1 || myData.fetchingInProgress}
+							onClick={() => setPage(myData.currentPage - 1)}
+						>
+							previous
+						</button>
+						{myData.totalNumberOfPages !== -1 &&
+							Array(myData.totalNumberOfPages)
+								.fill()
+								.map((_, page) => (
+									<button
+										key={page}
+										style={{
+											backgroundColor:
+												myData.currentPage === page + 1
+													? "rgba(0,0,255,0.9)"
+													: "",
+											color: myData.currentPage === page + 1 ? "white" : "",
+										}}
+										disabled={
+											myData.fetchingInProgress ||
+											myData.currentPage === page + 1
+										}
+										onClick={() => setPage(page + 1)}
+									>
+										{page + 1}
+									</button>
+								))}
+						<button
+							style={{
+								width: "4rem",
 							}}
 							disabled={
-								myData.fetchingInProgress || myData.currentPage === page
+								myData.currentPage === myData.totalNumberOfPages ||
+								myData.fetchingInProgress
 							}
-							onClick={() => getUserInformation(page)}
+							onClick={() => setPage(myData.currentPage + 1)}
 						>
-							{page}
+							next
 						</button>
-					))}
-					<button
-						style={{
-							width: "4rem",
-						}}
-						disabled={myData.currentPage === 5 || myData.fetchingInProgress}
-						onClick={() => getUserInformation(myData.currentPage + 1)}
-					>
-						next
-					</button>
+					</div>
+					<div className="user-info-text">
+						<span>
+							Showing results from {(myData.currentPage - 1) * 10 + 1} to{" "}
+							{myData.currentPage * 10}{" "}
+						</span>
+					</div>
 				</div>
 			)}
 		</div>

@@ -192,7 +192,13 @@ const Form = () => {
 					</div>
 					<div>
 						<textarea
-							style={{ width: "200px", maxWidth: "200px", overflow: "hidden" }}
+							style={{
+								width: "200px",
+								height: "70px",
+								maxWidth: "200px",
+								maxHeight: "70px",
+								overflow: "hidden",
+							}}
 							type="text"
 							name="address"
 							required
