@@ -118,7 +118,7 @@ const APIBasic2 = () => {
 							disabled={myData.currentPage === 1 || myData.fetchingInProgress}
 							onClick={() => setPage(myData.currentPage - 1)}
 						>
-							previous
+							Previous
 						</button>
 						{myData.totalNumberOfPages !== -1 &&
 							Array(myData.totalNumberOfPages)
@@ -152,7 +152,7 @@ const APIBasic2 = () => {
 							}
 							onClick={() => setPage(myData.currentPage + 1)}
 						>
-							next
+							Next
 						</button>
 					</div>
 					<div className="user-info-text">

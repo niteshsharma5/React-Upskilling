@@ -19,32 +19,30 @@ const APIBasic3 = () => {
 	};
 
 	const getUserInformation = () => {
-		const url = `http://fakeapi.jsonparseronline.com/users?_page=${myData.currentPage}`;
+		const url = `http://fakeapi.jsonparseronline.com/users?_delay=2000&_page=${myData.currentPage}`;
 
 		dispatch({ type: "SET_FETCH_IN_PROGRESS", payload: true });
-		setTimeout(() => {
-			fetch(url)
-				.then((res) => {
-					if (myData.totalNumberOfPages === -1) {
-						const totalNumberOfPages = res.headers.get("X-Total-Count") / 10;
-						dispatch({
-							type: "SET_TOTAL_NUMBER_OF_PAGES",
-							payload: totalNumberOfPages,
-						});
-					}
+		fetch(url)
+			.then((res) => {
+				if (myData.totalNumberOfPages === -1) {
+					const totalNumberOfPages = res.headers.get("X-Total-Count") / 10;
+					dispatch({
+						type: "SET_TOTAL_NUMBER_OF_PAGES",
+						payload: totalNumberOfPages,
+					});
+				}
 
-					return res.json();
-				})
-				.then((json) => {
-					dispatch({ type: "SET_USERS", payload: json });
-				})
-				.catch((err) => {
-					console.log(err);
-				})
-				.finally(() => {
-					dispatch({ type: "SET_FETCH_IN_PROGRESS", payload: false });
-				});
-		}, 2000);
+				return res.json();
+			})
+			.then((json) => {
+				dispatch({ type: "SET_USERS", payload: json });
+			})
+			.catch((err) => {
+				console.log(err);
+			})
+			.finally(() => {
+				dispatch({ type: "SET_FETCH_IN_PROGRESS", payload: false });
+			});
 	};
 
 	return (
@@ -120,7 +118,7 @@ const APIBasic3 = () => {
 							disabled={myData.currentPage === 1 || myData.fetchingInProgress}
 							onClick={() => setPage(myData.currentPage - 1)}
 						>
-							previous
+							Previous
 						</button>
 						{myData.totalNumberOfPages !== -1 &&
 							Array(myData.totalNumberOfPages)
@@ -154,7 +152,7 @@ const APIBasic3 = () => {
 							}
 							onClick={() => setPage(myData.currentPage + 1)}
 						>
-							next
+							Next
 						</button>
 					</div>
 					<div className="user-info-text">

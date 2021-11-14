@@ -3,10 +3,11 @@ import "./App.css";
 import Counter from "./components/Counter/";
 import Name from "./components/Name/";
 import Form from "./components/Form/";
-import ApiBasic1 from "./components/ApiBasic1/";
-import ApiBasic2 from "./components/ApiBasic2/";
-import ApiBasic3 from "./components/ApiBasic3/";
+import APIBasic1 from "./components/APIBasic1/";
+import APIBasic2 from "./components/APIBasic2/";
+import APIBasic3 from "./components/APIBasic3/";
 import ReRender from "./components/ReRender/";
+import APIParallel from "./components/APIParallel";
 
 function App() {
 	return (
@@ -14,10 +15,11 @@ function App() {
 			<Counter />
 			<Name />
 			<Form />
-			<ApiBasic1 />
-			<ApiBasic2 />
-			<ApiBasic3 />
+			<APIBasic1 />
+			<APIBasic2 />
+			<APIBasic3 />
 			<ReRender />
+			<APIParallel />
 		</div>
 	);
 }
