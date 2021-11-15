@@ -8,6 +8,7 @@ import APIBasic2 from "./components/APIBasic2/";
 import APIBasic3 from "./components/APIBasic3/";
 import ReRender from "./components/ReRender/";
 import APIParallel from "./components/APIParallel";
+import APIDown from "./components/APIDown";
 
 function App() {
 	return (
@@ -20,6 +21,7 @@ function App() {
 			<APIBasic3 />
 			<ReRender />
 			<APIParallel />
+			<APIDown />
 		</div>
 	);
 }
