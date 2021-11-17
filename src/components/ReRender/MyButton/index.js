@@ -2,8 +2,6 @@ import React, { memo } from "react";
 import "./style.css";
 
 const MyButton = ({ text, count }) => {
-	console.log("Child renders");
-
 	return (
 		<div>
 			<h6>Child Component: MyButton</h6>

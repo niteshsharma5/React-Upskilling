@@ -9,6 +9,7 @@ import APIBasic3 from "./components/APIBasic3/";
 import ReRender from "./components/ReRender/";
 import APIParallel from "./components/APIParallel";
 import APIDown from "./components/APIDown";
+import APIOptimise from "./components/APIOptimise";
 
 function App() {
 	return (
@@ -22,6 +23,7 @@ function App() {
 			<ReRender />
 			<APIParallel />
 			<APIDown />
+			<APIOptimise />
 		</div>
 	);
 }

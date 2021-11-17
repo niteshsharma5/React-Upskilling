@@ -12,6 +12,7 @@ const APIParallel = () => {
 		let url = "http://fakeapi.jsonparseronline.com/users/?";
 
 		url = userIds.reduce((url, userId) => url + "id=" + userId + "&", url);
+		url = userIds.reduce((url, userId) => `${url}id=${userId}&`, url);
 
 		return url;
 	};
