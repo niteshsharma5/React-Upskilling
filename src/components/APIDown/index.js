@@ -29,11 +29,6 @@ const APIDown = () => {
 			.finally(() => {
 				dispatch({ type: "SET_FETCH_IN_PROGRESS", payload: false });
 			});
-
-		// setTimeout(() => {
-		// 	dispatch({ type: "SET_FETCH_IN_PROGRESS", payload: false });
-		// 	dispatch({ type: "SET_ERROR", payload: "500 Internal server error" });
-		// }, 4000);
 	};
 
 	return (
