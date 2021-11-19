@@ -6,32 +6,36 @@ import useAPIReducer from "./APIReducer";
 const APIParallel = () => {
 	const [myData, dispatch] = useAPIReducer();
 
-	const userIds = [4, 9, 1, 20, 12];
-
-	const setURL = () => {
-		let url = "http://fakeapi.jsonparseronline.com/users/?";
-
-		url = userIds.reduce((url, userId) => url + "id=" + userId + "&", url);
-		url = userIds.reduce((url, userId) => `${url}id=${userId}&`, url);
-
-		return url;
-	};
+	const userIds = [1, 4, 9, 12, 20];
 
 	const getUserInformation = (event) => {
 		dispatch({ type: "SET_FETCH_IN_PROGRESS", payload: true });
 
-		const url = setURL();
+		const apiCallsPromiseCollection = [];
 
-		fetch(url)
-			.then((res) => res.json())
-			.then((json) => {
-				dispatch({ type: "SET_USERS", payload: json });
+		userIds.forEach((userId) => {
+			const apiResult = fetch(
+				`http://fakeapi.jsonparseronline.com/users/${userId}`
+			)
+				.then((res) => {
+					return res.json();
+				})
+				.then((json) => {
+					dispatch({ type: "SET_USERS", payload: json });
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+
+			apiCallsPromiseCollection.push(apiResult);
+		});
+
+		Promise.all(apiCallsPromiseCollection)
+			.then(() => {
+				dispatch({ type: "SET_FETCH_IN_PROGRESS", payload: false });
 			})
 			.catch((err) => {
 				console.log(err);
-			})
-			.finally(() => {
-				dispatch({ type: "SET_FETCH_IN_PROGRESS", payload: false });
 			});
 	};
 
