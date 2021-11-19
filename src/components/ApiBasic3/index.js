@@ -20,7 +20,7 @@ const APIBasic3 = () => {
 	};
 
 	const getUserInformation = () => {
-		const url = `http://fakeapi.jsonparseronline.com/users?_delay=2000&_page=${myData.currentPage}`;
+		const url = `http://fakeapi.jsonparseronline.com/users?_page=${myData.currentPage}`;
 
 		dispatch({ type: "SET_FETCH_IN_PROGRESS", payload: true });
 		fetch(url)

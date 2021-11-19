@@ -11,18 +11,15 @@ const APIOptimise = () => {
 	}, [myData.userId]);
 
 	const handleUserIdChange = (event) => {
-		event.preventDefault();
-		console.log(typeof event.target.value);
-
-		if (event.target.value && event.target.value !== "") {
-			dispatch({ type: "SET_USER_ID", payload: event.target.value });
-		}
+		dispatch({ type: "SET_USER_ID", payload: event.target.value });
 	};
 
 	const getUserInformation = () => {
-		const url = `http://fakeapi.jsonparseronline.com/users?_delay=3000&id=${myData.userId}`;
+		console.log(myData.userId);
+		const url = `http://fakeapi.jsonparseronline.com/users?id=${myData.userId}`;
 
 		dispatch({ type: "SET_FETCH_IN_PROGRESS", payload: true });
+
 		fetch(url)
 			.then((res) => res.json())
 			.then((json) => {
@@ -47,7 +44,13 @@ const APIOptimise = () => {
 
 			<div className="display-details">
 				{myData.fetchingInProgress && <div className="loader"></div>}
-				{!myData.fetchingInProgress && myData.userId !== -1 && myData.userData && (
+
+				{!myData.fetchingInProgress &&
+					(myData.userId > 100 || myData.userId < 0) && (
+						<div className="user-not-found-block">No user Found</div>
+					)}
+
+				{!myData.fetchingInProgress && myData.userId !== 0 && myData.userData && (
 					<div className="display-values">
 						<h4>User details with user Id {myData.userId} are: </h4>
 						<div className="display-detail">
