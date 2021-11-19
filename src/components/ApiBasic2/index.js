@@ -8,10 +8,12 @@ const APIBasic2 = () => {
 
 	useEffect(() => {
 		setPage(1);
+		// eslint-disable-next-line
 	}, []);
 
 	useEffect(() => {
 		getUserInformation();
+		// eslint-disable-next-line
 	}, [myData.currentPage]);
 
 	const setPage = (pageNumber) => {
@@ -158,7 +160,7 @@ const APIBasic2 = () => {
 					<div className="user-info-text">
 						<span>
 							Showing results from {(myData.currentPage - 1) * 10 + 1} to{" "}
-							{myData.currentPage * 10}{" "}
+							{myData.currentPage * 10} out of {myData.totalNumberOfPages * 10}
 						</span>
 					</div>
 				</div>

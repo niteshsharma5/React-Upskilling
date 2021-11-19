@@ -8,6 +8,11 @@
 	animation: spin 1s linear infinite;
 }
 
+.size-equalizer {
+	width: 550px;
+	height: 550px;
+}
+
 @keyframes spin {
 	0% {
 		transform: rotate(0deg);

@@ -8,10 +8,11 @@ const APIBasic3 = () => {
 
 	useEffect(() => {
 		setPage(1);
+		// eslint-disable-next-line
 	}, []);
-
 	useEffect(() => {
 		getUserInformation();
+		// eslint-disable-next-line
 	}, [myData.currentPage]);
 
 	const setPage = (pageNumber) => {
@@ -52,7 +53,7 @@ const APIBasic3 = () => {
 			{myData.users.length > 0 && (
 				<div className="display-details">
 					{myData.fetchingInProgress ? (
-						<div className="loader"></div>
+						<div className="loader size-equalizer"></div>
 					) : (
 						<table>
 							<thead>
@@ -158,7 +159,7 @@ const APIBasic3 = () => {
 					<div className="user-info-text">
 						<span>
 							Showing results from {(myData.currentPage - 1) * 10 + 1} to{" "}
-							{myData.currentPage * 10}{" "}
+							{myData.currentPage * 10} out of {myData.totalNumberOfPages * 10}
 						</span>
 					</div>
 				</div>
