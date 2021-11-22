@@ -10,6 +10,9 @@ const reducer = (state, action) => {
 		case "SET_USERS":
 			return { ...state, users: [...state.users, action.payload] };
 
+		case "RESET_USERS":
+			return { ...state, users: [] };
+
 		case "SET_FETCH_IN_PROGRESS":
 			return { ...state, fetchingInProgress: action.payload };
 

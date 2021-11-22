@@ -8,10 +8,14 @@ const APIParallel = () => {
 
 	const userIds = [1, 4, 9, 12, 20];
 
-	const getUserInformation = (event) => {
+	const getUserInformation = () => {
+		dispatch({ type: "RESET_USERS" });
+
 		dispatch({ type: "SET_FETCH_IN_PROGRESS", payload: true });
 
 		const apiCallsPromiseCollection = [];
+
+		apiCallsPromiseCollection.push(Promise.reject("some error"));
 
 		userIds.forEach((userId) => {
 			const apiResult = fetch(
@@ -31,11 +35,13 @@ const APIParallel = () => {
 		});
 
 		Promise.all(apiCallsPromiseCollection)
-			.then(() => {
-				dispatch({ type: "SET_FETCH_IN_PROGRESS", payload: false });
-			})
+			.then(() => {})
 			.catch((err) => {
 				console.log(err);
+				dispatch({ type: "RESET_USERS" });
+			})
+			.finally(() => {
+				dispatch({ type: "SET_FETCH_IN_PROGRESS", payload: false });
 			});
 	};
 
