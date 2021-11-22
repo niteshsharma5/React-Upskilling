@@ -11,7 +11,14 @@ const APIOptimise = () => {
 	}, [myData.userId]);
 
 	const handleUserIdChange = (event) => {
-		dispatch({ type: "SET_USER_ID", payload: event.target.value });
+		let timer;
+
+		if (timer) clearTimeout(timer);
+
+		timer = setTimeout(() => {
+			timer = null;
+			dispatch({ type: "SET_USER_ID", payload: event.target.value });
+		}, 2000);
 	};
 
 	const getUserInformation = () => {
