@@ -1,43 +1,56 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./style.css";
 
 import useAPIReducer from "./APIReducer";
 
+const useFetchUserData = (userId) => {
+	const [data, setData] = useState({});
+	const [fetchingInProgress, setFetchingInProgress] = useState(false);
+	const [userIdToSearch, setUserIdToSearch] = useState("");
+
+	useEffect(() => {
+		console.log(userIdToSearch);
+		const url = `http://fakeapi.jsonparseronline.com/users?id=${userIdToSearch}`;
+
+		setFetchingInProgress(true);
+		fetch(url)
+			.then((res) => res.json())
+			.then((data) => setData(data[0]))
+			.catch((err) => console.log(err))
+			.finally(() => setFetchingInProgress(false));
+	}, [userIdToSearch]);
+
+	useEffect(() => {
+		// if(timerId!=-1)clearTimeout(timerId);
+
+		const timerId = setTimeout(() => {
+			setUserIdToSearch(userId);
+		}, 2000);
+
+		return () => clearTimeout(timerId);
+	}, [userId]);
+
+	return [data, fetchingInProgress];
+};
+
 const APIOptimise = () => {
 	const [myData, dispatch] = useAPIReducer();
 
+	const [data, fetchingInProgress] = useFetchUserData(myData.userId);
+
 	useEffect(() => {
-		getUserInformation();
-	}, [myData.userId]);
+		dispatch({ type: "SET_USER_DATA", payload: data });
+	}, [data]);
 
 	const handleUserIdChange = (event) => {
-		let timer;
+		// let timer;
 
-		if (timer) clearTimeout(timer);
+		// if (timer) clearTimeout(timer);
 
-		timer = setTimeout(() => {
-			timer = null;
-			dispatch({ type: "SET_USER_ID", payload: event.target.value });
-		}, 2000);
-	};
-
-	const getUserInformation = () => {
-		console.log(myData.userId);
-		const url = `http://fakeapi.jsonparseronline.com/users?id=${myData.userId}`;
-
-		dispatch({ type: "SET_FETCH_IN_PROGRESS", payload: true });
-
-		fetch(url)
-			.then((res) => res.json())
-			.then((json) => {
-				dispatch({ type: "SET_USER_DATA", payload: json[0] });
-			})
-			.catch((err) => {
-				console.log(err);
-			})
-			.finally(() => {
-				dispatch({ type: "SET_FETCH_IN_PROGRESS", payload: false });
-			});
+		// timer = setTimeout(() => {
+		// 	timer = null;
+		dispatch({ type: "SET_USER_ID", payload: event.target.value });
+		// }, 1000);
 	};
 
 	return (
@@ -50,14 +63,13 @@ const APIOptimise = () => {
 			</label>
 
 			<div className="display-details">
-				{myData.fetchingInProgress && <div className="loader"></div>}
+				{fetchingInProgress && <div className="loader"></div>}
 
-				{!myData.fetchingInProgress &&
-					(myData.userId > 100 || myData.userId < 0) && (
-						<div className="user-not-found-block">No user Found</div>
-					)}
+				{!fetchingInProgress && (myData.userId > 100 || myData.userId < 0) && (
+					<div className="user-not-found-block">No user Found</div>
+				)}
 
-				{!myData.fetchingInProgress && myData.userId !== 0 && myData.userData && (
+				{!fetchingInProgress && myData.userId !== 0 && myData.userData && (
 					<div className="display-values">
 						<h4>User details with user Id {myData.userId} are: </h4>
 						<div className="display-detail">

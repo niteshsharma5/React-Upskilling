@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./style.css";
 
-const useClock = () => {
-	const date = new Date();
-
+const useClock = (date) => {
 	const [hours, setHours] = useState(date.getHours());
 	const [minutes, setMinutes] = useState(date.getMinutes());
 	const [seconds, setSeconds] = useState(date.getSeconds());
@@ -36,7 +34,7 @@ const useClock = () => {
 };
 
 const DigitalClock = () => {
-	const [hours, minutes, seconds] = useClock();
+	const [hours, minutes, seconds] = useClock(new Date());
 
 	return (
 		<div className="main outer-block">

@@ -2,7 +2,7 @@ import { useReducer } from "react";
 
 const initialState = {
 	userId: 0,
-	userData: {},
+	userData: null,
 	fetchingInProgress: false,
 };
 
