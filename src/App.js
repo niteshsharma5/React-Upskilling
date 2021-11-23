@@ -12,6 +12,7 @@ import APIDown from "./components/APIDown";
 import APIOptimise from "./components/APIOptimise";
 import DigitalClock from "./components/DigitalClock";
 import WindowSizeHandler from "./components/WindowSizeHandler";
+import A from "./components/ThemeMode";
 
 function App() {
 	return (
@@ -28,6 +29,7 @@ function App() {
 			<APIOptimise />
 			<DigitalClock />
 			<WindowSizeHandler />
+			<A />
 		</div>
 	);
 }
