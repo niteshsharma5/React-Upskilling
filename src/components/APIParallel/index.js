@@ -9,8 +9,6 @@ const APIParallel = () => {
 	const userIds = [1, 4, 9, 12, 20];
 
 	const getUserInformation = () => {
-		dispatch({ type: "RESET_USERS" });
-
 		dispatch({ type: "SET_FETCH_IN_PROGRESS", payload: true });
 
 		const apiCallsPromiseCollection = [];
@@ -20,22 +18,18 @@ const APIParallel = () => {
 		userIds.forEach((userId) => {
 			const apiResult = fetch(
 				`http://fakeapi.jsonparseronline.com/users/${userId}`
-			)
-				.then((res) => {
-					return res.json();
-				})
-				.then((json) => {
-					dispatch({ type: "SET_USERS", payload: json });
-				})
-				.catch((err) => {
-					console.log(err);
-				});
+			);
 
 			apiCallsPromiseCollection.push(apiResult);
 		});
 
-		Promise.all(apiCallsPromiseCollection)
-			.then(() => {})
+		apiCallsPromiseCollection.push(Promise.reject("some error again"));
+
+		Promise.allSettled(apiCallsPromiseCollection)
+			.then((values) => values.filter((value) => value.status === "fulfilled"))
+			.then((values) => values.map((res) => res.value.json()))
+			.then((promise) => Promise.all(promise))
+			.then((values) => dispatch({ type: "SET_USERS", payload: values }))
 			.catch((err) => {
 				console.log(err);
 				dispatch({ type: "RESET_USERS" });
